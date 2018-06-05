@@ -47,6 +47,8 @@ plot_eigengap(eigenvalues);
 %% Plot cluster on 2-dimensional space
 
 ResFolder = strcat('Results_',string(datetime('now','Format','yyyyMMdd_HHmm')));
+mkdir(ResFolder);
+
 folder = ResFolder;     % all results are save in folder
 method = 'tsne';        % set method as 'pca' or 'tsne'
 latent = plot_cluster(W,cluster_label,No_cluster,method,folder);
