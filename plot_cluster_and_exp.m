@@ -1,4 +1,4 @@
-function latent = plot_cluster(W,cluster_label,No_cluster,method,folder)
+function latent = plot_cluster(W,cluster_label,No_cluster,method,folder,expid)
 
 % plot cluster on 2-dimensional space
 % input
@@ -45,6 +45,8 @@ for i = 1:No_cluster
     end
 end
 legend(lgd,'FontSize',12,'Location','best');%,'Orientation','horizontal');
+set(gca,'xtick',[]); set(gca,'ytick',[]);
+set(gca,'XColor','none'); set(gca,'YColor','none');
 set(gca,'FontName','Arial');
 set(gca,'FontSize',12);
 
@@ -71,4 +73,46 @@ fig.PaperSize = [fig_pos(3) fig_pos(4)];
 
 
 print([folder '\Cluster_' method],'-dpdf','-r300','-fillpage'); %'-dpdf',
+
+
+
+%% Plot clusters by experiment ID
+figure;
+for ik = 1:No_exp
+    scatter(dvis(find(expid==ik),1),dvis(find(expid==ik),2),40,...
+            'filled','MarkerEdgeAlpha',0.5,'MarkerFaceAlpha',0.3);
+    hold on;
+end
+
+box off;
+legend('wt-1', 'wt-2', 'mt-1', 'mt-2');
+set(gca,'xtick',[]); set(gca,'ytick',[]);
+set(gca,'XColor','none'); set(gca,'YColor','none');
+set(gca,'FontName','Arial');
+set(gca,'FontSize',12);
+
+%
+ax = gca;
+outerpos = ax.OuterPosition;
+ti = ax.TightInset;
+left = outerpos(1) + ti(1);
+bottom = outerpos(2) + ti(2);
+ax_width = outerpos(3) - ti(1) - ti(3);
+ax_height = outerpos(4) - ti(2) - ti(4);
+ax.Position = [left bottom ax_width ax_height];
+
+fig = gcf;
+fig.PaperPositionMode = 'auto';
+fig_pos = fig.PaperPosition;
+fig.PaperSize = [fig_pos(3) fig_pos(4)];
+
+print([resfolder '\Cluster_byexp_' method],'-dpdf','-r300','-fillpage');
+
+
 latent = dvis;
+
+
+
+
+
+
