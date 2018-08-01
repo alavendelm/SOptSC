@@ -7,20 +7,41 @@ function plot_lineage(Lineage,No_cluster,cluster_label,Cell_dist,folder)
 %   -- Cell_dist: distance between each cell and root cell on cell-cell graph
 %   -- folder: folder name where the results will be saved to.
 
-cmap1 = jet;
-mymap1 = cmap1;
-ncolor = size(mymap1,1);
-mycolor = mymap1(1:round(ncolor./No_cluster):ncolor,:);
+
+% Use nice colors 
+%cmap1 = jet;
+%mymap1 = cmap1;
+%ncolor = size(mymap1,1);
+%mycolor = mymap1(1:round(ncolor./No_cluster):ncolor,:);
+mycolor = acolors(No_cluster);
+
 
 % plot cluster color on lineage tree
 pred = Lineage;
 rootedTree = digraph(pred(pred~=0),find(pred~=0));
+
 figure;
-% plot(rootedTree,'Marker','o','MarkerSize',20,'NodeColor',mycolor(1:No_cluster,:),'NodeLabel',[]);
-plot(rootedTree,'Marker','o','MarkerSize',20,'NodeColor',mycolor(1:No_cluster,:));
-set(gca,'xtick',[]);
-set(gca,'ytick',[]);
-title('Cluster on lineage')
+%plot(rootedTree,'Marker','o','MarkerSize',20,'NodeColor',mycolor(1:No_cluster,:));
+h = plot(rootedTree,'Marker','o','MarkerSize',20, ...
+    'EdgeColor',[0,0,0], 'LineWidth',1.4, 'ArrowSize',12, ...
+    'NodeColor',mycolor(1:No_cluster,:),'NodeLabel',[]);
+for i=1:No_cluster
+   text(h.XData(i)+0.08,h.YData(i),num2str(i),'fontsize',16);
+end
+
+set(gca,'xtick',[]); set(gca,'ytick',[]);
+set(gca,'XColor','none'); set(gca,'YColor','none');
+set(gca,'FontName','Arial');
+set(gca,'FontSize',12);
+
+%title('Cluster on lineage')
+
+fig = gcf;
+fig.PaperPositionMode = 'auto';
+fig_pos = fig.PaperPosition;
+fig.PaperSize = [fig_pos(3) fig_pos(4)];
+%fig.PaperUnits = 'inches';
+%fig.PaperPosition = [0 0 4 3];
 
 print([folder '\Lineage_Cluster_Color'],'-dpdf','-r300'); 
 
@@ -40,7 +61,14 @@ pred = Lineage;
 rootedTree = digraph(pred(pred~=0),find(pred~=0));
 figure;
 colormap(mymap);
-plot(rootedTree,'Marker','o','MarkerSize',20,'NodeCData',ptimecolor, 'NodeColor','flat','NodeLabel',[]);
+
+%plot(rootedTree,'Marker','o','MarkerSize',20,'NodeCData',ptimecolor, 'NodeColor','flat','NodeLabel',[]);
+h = plot(rootedTree,'Marker','o','MarkerSize',20, ...
+    'EdgeColor',[0,0,0], 'LineWidth',1.4, 'ArrowSize',12, ...
+    'NodeCData',ptimecolor,'NodeColor','flat', 'NodeLabel',[]);
+for i=1:No_cluster
+   text(h.XData(i)+0.08,h.YData(i),num2str(i),'fontsize',16);
+end
 
 cb = colorbar;
 ax = gca;
@@ -62,12 +90,22 @@ for ii = 2:length(cb.TickLabels)-1
 end
 box on;
 
-% set(gca,'LineWidth',1.5);
-set(gca,'xtick',[]);
-set(gca,'ytick',[]);
+colorbar('off')
+
+set(gca,'xtick',[]); set(gca,'ytick',[]);
+set(gca,'XColor','none'); set(gca,'YColor','none');
 set(gca,'FontName','Arial');
 set(gca,'FontSize',12);
+%title('Pseudotime on lineage')
 
+%set(h,'Units','Inches');
+%pos = get(h,'Position');
+%set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
 
-title('Pseudotime on lineage')
+fig = gcf;
+fig.PaperPositionMode = 'auto';
+fig_pos = fig.PaperPosition;
+fig.PaperSize = [fig_pos(3) fig_pos(4)];
+
 print([folder '\Lineage_ptime_Color'],'-dpdf','-r300'); 
+

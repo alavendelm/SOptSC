@@ -17,6 +17,7 @@ elseif strcmp(method,'tsne')
         InitY = pca1(W1,2);
         dvis = tsne(W1,'Standardize',true,'Perplexity',35,'NumDimensions',2,'InitialY',InitY);
 end
+save([folder 'dvis']);
 
 
 %% Subpopulations visualization

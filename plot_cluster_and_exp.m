@@ -1,4 +1,4 @@
-function latent = plot_cluster(W,cluster_label,No_cluster,method,folder,expid)
+function latent = plot_cluster_and_exp(W,cluster_label,No_cluster,method,folder,expid)
 
 % plot cluster on 2-dimensional space
 % input
@@ -17,6 +17,7 @@ elseif strcmp(method,'tsne')
         InitY = pca1(W1,2);
         dvis = tsne(W1,'Standardize',true,'Perplexity',35,'NumDimensions',2,'InitialY',InitY);
 end
+save([folder 'dvis']);
 
 
 %% Subpopulations visualization
@@ -77,6 +78,8 @@ print([folder '\Cluster_' method],'-dpdf','-r300','-fillpage'); %'-dpdf',
 
 
 %% Plot clusters by experiment ID
+No_exp = length(unique(expid));
+
 figure;
 for ik = 1:No_exp
     scatter(dvis(find(expid==ik),1),dvis(find(expid==ik),2),40,...
@@ -106,8 +109,7 @@ fig.PaperPositionMode = 'auto';
 fig_pos = fig.PaperPosition;
 fig.PaperSize = [fig_pos(3) fig_pos(4)];
 
-print([resfolder '\Cluster_byexp_' method],'-dpdf','-r300','-fillpage');
-
+print([folder '\Cluster_byexp_' method],'-dpdf','-r300','-fillpage');
 
 latent = dvis;
 
