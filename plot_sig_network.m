@@ -38,12 +38,15 @@ end
 No_cluster = length(unique(cluster_label));
 No_cells = length(cluster_label);
 
+
 % cmap1 = jet;
 % mymap1 = cmap1(1:end,:);
 % ncolor = size(mymap1,1);
 % mycolor2 = mymap1(1:round(ncolor./No_cluster):ncolor,:);
 % mycolor = mycolor2(1:No_cluster,:);
+
 mycolor = acolors(No_cluster);
+mycolor = mycolor(1:No_cluster,:);
 
 mycolor_cells = zeros(No_cells,3);
 
