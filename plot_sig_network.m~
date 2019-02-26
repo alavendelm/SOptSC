@@ -160,19 +160,13 @@ for j = 1:No_LR
     Gh = plot(bg,'Marker','o','MarkerSize',25,'Layout','circle','NodeLabel',[],...
         'NodeColor',mycolor,'EdgeColor',[0.5,0.5,0.5],'LineWidth',...
         bg.Edges.LWidths,'ArrowSize',15);
-
+    set(gca,'xtick',[]);
+    set(gca,'ytick',[]);
     a = Lig{j};
     b = Rec{j};
     title([a{1} '\_' b{1}],'fontsize',12);
-    set(gca,'xtick',[]); set(gca,'ytick',[]);
-    set(gca,'XColor','none'); set(gca,'YColor','none');
-    fig = gcf;
-    fig.PaperPositionMode = 'auto';
-    fig_pos = fig.PaperPosition;
-    fig.PaperSize = [fig_pos(3) fig_pos(4)];
-
     colormap(mycolor);
-    colorbar('Ticks',tickval,'TickLabels',lgd,'FontSize',12, 'Location','EastOutside');
+    colorbar('Ticks',tickval,'TickLabels',lgd,'FontSize',12);
     
     print([folder '\Cluster_cluster_' a{1} '_' b{1}],'-dpdf','-r300');
     end
@@ -203,6 +197,7 @@ Gh = plot(bg,'Marker','o','MarkerSize',25,'Layout','circle','NodeLabel',[],...
 set(gca,'xtick',[]); set(gca,'ytick',[]);
 set(gca,'XColor','none'); set(gca,'YColor','none');
 title('Cluster\_cluster\_all\_pairs','fontsize',12);
+
 fig = gcf;
 fig.PaperPositionMode = 'auto';
 fig_pos = fig.PaperPosition;
