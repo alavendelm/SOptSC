@@ -45,7 +45,7 @@ No_cells = length(cluster_label);
 % mycolor2 = mymap1(1:round(ncolor./No_cluster):ncolor,:);
 % mycolor = mycolor2(1:No_cluster,:);
 
-mycolor = acolors(No_cluster);
+mycolor = acolors_paper(No_cluster);
 mycolor = mycolor(1:No_cluster,:);
 
 mycolor_cells = zeros(No_cells,3);
@@ -174,7 +174,7 @@ for j = 1:No_LR
     colormap(mycolor);
     colorbar('Ticks',tickval,'TickLabels',lgd,'FontSize',12, 'Location','EastOutside');
     
-    print([folder '\Cluster_cluster_' a{1} '_' b{1}],'-dpdf','-r300');
+    print([folder '\Clusters_' a{1} '_' b{1}],'-dpdf','-r300');
     end
 end
 
@@ -183,6 +183,9 @@ end
 P = Pall;
 P(P<=threshold) = 0;
 P_cluster = zeros(No_cluster);
+
+Ligand = Lig{1};
+
 for i1 = 1:No_cluster
     for j1 = 1:No_cluster
         P_cluster(i1,j1) = sum(sum(P(cluster_label==i1,cluster_label ==j1)));
@@ -202,7 +205,7 @@ Gh = plot(bg,'Marker','o','MarkerSize',25,'Layout','circle','NodeLabel',[],...
 
 set(gca,'xtick',[]); set(gca,'ytick',[]);
 set(gca,'XColor','none'); set(gca,'YColor','none');
-title('Cluster\_cluster\_all\_pairs','fontsize',12);
+title(['Cluster\_' Ligand{1} '\_all'],'fontsize',12);
 fig = gcf;
 fig.PaperPositionMode = 'auto';
 fig_pos = fig.PaperPosition;
@@ -211,7 +214,7 @@ fig.PaperSize = [fig_pos(3) fig_pos(4)];
 colormap(mycolor);
 colorbar('Ticks',tickval,'TickLabels',lgd,'FontSize',12, 'Location','EastOutside');
 
-print([folder '\Cluster_cluster_all_pairs'],'-dpdf','-r300');
+print([folder '\Clusters_' Ligand{1} '_all'],'-dpdf','-r300');
 end
 
 
