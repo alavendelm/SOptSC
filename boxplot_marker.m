@@ -10,10 +10,16 @@ function boxplot_marker(data,allgenes,marker,cluster_labs,No_cluster,folder)
 %   -- folder: folder name where the results saved
 %
 
-cmap1 = jet;
-mymap1 = cmap1(1:end,:);
-ncolor = size(mymap1,1);
-mycolor = mymap1(1:round(ncolor./No_cluster):ncolor,:);
+
+%DONT USE
+%cmap1 = jet;
+%mymap1 = cmap1(1:end,:);
+%ncolor = size(mymap1,1);
+%mycolor = mymap1(1:round(ncolor./No_cluster):ncolor,:);
+
+% INSTEAD:
+mycolor = acolors(No_cluster);
+
 
 group = cell(size(cluster_labs));
 for i = 1:length(cluster_labs)
